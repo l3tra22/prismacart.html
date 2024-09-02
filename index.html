@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>fsp.artisoftlabs.com</title>
+    <link rel="apple-touch-icon" href="path/to/icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #ffffff;
+            scroll-behavior: smooth;
+        }
+
+        .intro-banner {
+            width: 100%;
+            height: 300px;
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: #ffffff;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+            .intro-banner.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .product-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+
+        .product-item {
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+            .product-item.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .product-item:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            }
+
+            .product-item img {
+                width: 100%;
+                max-height: 200px;
+                object-fit: cover;
+                border-radius: 8px;
+                margin-bottom: 15px;
+            }
+
+        .product-name {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .product-price {
+            font-size: 16px;
+            color: #bbbbbb;
+        }
+
+        form {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            margin-top: 40px;
+            width: 100%;
+            max-width: 500px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+            form.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #bbbbbb;
+        }
+
+        input[type="email"],
+        input[type="number"],
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #333;
+            color: #ffffff;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            input[type="email"]:focus,
+            input[type="number"]:focus,
+            input[type="text"]:focus,
+            select:focus {
+                border-color: #28a745;
+                box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+            }
+
+        input[type="submit"],
+        .custom-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s ease;
+        }
+
+            input[type="submit"]:hover,
+            .custom-button:hover {
+                background-color: #218838;
+            }
+
+        .card-info {
+            display: none;
+        }
+
+        .paypal-button-container {
+            display: none; /* Hide PayPal button initially */
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #1e1e1e;
+            color: #bbbbbb;
+            margin-top: 40px;
+            border-top: 1px solid #333;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+            footer.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        .cart-section {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #1e1e1e;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+            .cart-section i {
+                font-size: 24px;
+                color: #ffffff;
+            }
+
+        @media (max-width: 768px) {
+            .cart-section {
+                width: 50px;
+                height: 50px;
+                top: 10px;
+                right: 10px;
+                font-size: 24px;
+            }
+
+            .container {
+                padding-top: 160px;
+            }
+
+            .product-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .product-item {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="intro-banner">
+        Welcome to Artisoft Laboratories, LLC
+    </div>
+
+    <div class="container">
+        <h1>Prisma POS Hardware</h1>
+        <div class="product-gallery">
+            <div class="product-item">
+                <img src="https://github.com/l3tra22/pos1stgen.html/blob/main/Blck_Orange_AIO_2024-08-30_183031-removebg-preview.png?raw=true" alt="Lenovo POS 1st Gen">
+                <p class="product-name">PRISMA POS 1st Gen</p>
+                <p class="product-price">$550.00</p>
+                <button onclick="addToCart('PRISMA POS 1st Gen', 550)">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="https://github.com/l3tra22/pos2ndgen.html/blob/main/2ngenAIOblckorang-removebg-preview.png?raw=true">
+                <p class="product-name">PRISMA POS 2nd Gen</p>
+                <p class="product-price">$700.00</p>
+                <button onclick="addToCart('PRISMA POS 2nd Gen', 700)">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="https://github.com/l3tra22/dbox.html/blob/main/Dbox-removebg-preview.png?raw=true" alt="PIE Dbox Fuel Controller">
+                <p class="product-name">PIE Dbox Fuel Controller</p>
+                <p class="product-price">$1,250.00</p>
+                <button onclick="addToCart('PIE Dbox Fuel Controller', 1250)">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="https://github.com/l3tra22/honeywell.html/blob/main/scanner_honey_well-removebg-preview.png?raw=true" alt="Honeywell Orbit Scanner">
+                <p class="product-name">Honeywell Orbit Scanner</p>
+                <p class="product-price">$320.00</p>
+                <button onclick="addToCart('Honeywell Orbit Scanner', 320)">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="https://github.com/l3tra22/cashdrawer.html/blob/main/cash_drawer-removebg-preview.png?raw=true" alt="Cash Drawer Register">
+                <p class="product-name">Cash Drawer Register</p>
+                <p class="product-price">$450.00</p>
+                <button onclick="addToCart('Cash Drawer Register', 450)">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="https://github.com/l3tra22/p25.html/blob/main/elanda.p25-removebg-preview.png?raw=true" alt="Thermal Receipt Printer">
+                <p class="product-name">Thermal Receipt Printer</p>
+                <p class="product-price">$500.00</p>
+                <button onclick="addToCart('Thermal Receipt Printer', 500)">Add to Cart</button>
+            </div>
+        </div>
+
+        <form id="checkout-form">
+            <h2>Checkout</h2>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="number" id="phone" name="phone" required>
+
+            <label for="payment-method">Payment Method:</label>
+            <input type="radio" id="credit-card" name="payment-method" value="credit-card" checked>
+            <label for="credit-card">Credit Card</label>
+            <input type="radio" id="paypal" name="payment-method" value="paypal">
+            <label for="paypal">PayPal</label>
+
+            <div id="card-info" class="card-info">
+                <label for="card-number">Card Number:</label>
+                <input type="text" id="card-number" name="card-number">
+
+                <label for="card-expiry">Expiry Date:</label>
+                <input type="text" id="card-expiry" name="card-expiry">
+
+                <label for="card-cvc">CVC:</label>
+                <input type="text" id="card-cvc" name="card-cvc">
+            </div>
+
+            <div id="paypal-options">
+                <div id="paypal-button-container" class="paypal-button-container"></div>
+            </div>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <footer>
+        &copy; 2024 Artisoft Laboratories, LLC All Rights Reserved
+    </footer>
+
+    <a href="https://github.com/l3tra22/cart.html/blob/main/cart.html" class="cart-section">
+        <i class="fas fa-shopping-cart"></i>
+    </a>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AeNKZo_L8BvPcLXEWs7bTnw53u3M5r1b_8pbfulMi7PifQUURwNMxSir95qBe5H_puwiRWh96LEgDtj6"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.intro-banner').classList.add('visible');
+            document.querySelectorAll('.product-item').forEach(item => item.classList.add('visible'));
+            document.querySelector('form').classList.add('visible');
+            document.querySelector('footer').classList.add('visible');
+
+            const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
+            paymentMethodRadios.forEach(radio => {
+                radio.addEventListener('change', handlePaymentMethodChange);
+            });
+
+            document.getElementById('checkout-form').addEventListener('submit', function (event) {
+                event.preventDefault();
+                // Process form submission here
+                alert('Form submitted!');
+            });
+        });
+
+        function addToCart(productName, productPrice) {
+            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            cartItems.push({ name: productName, price: productPrice });
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+            alert(`${productName} has been added to your cart.`);
+        }
+
+        function handlePaymentMethodChange() {
+            const selectedPaymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+            const cardInfo = document.getElementById('card-info');
+            const paypalOptions = document.getElementById('paypal-options');
+            const paypalButtonContainer = document.getElementById('paypal-button-container');
+
+            if (selectedPaymentMethod === 'paypal') {
+                cardInfo.style.display = 'none';
+                paypalOptions.style.display = 'block';
+                paypalButtonContainer.style.display = 'block'; // Show PayPal button
+                renderPayPalButton();
+            } else {
+                cardInfo.style.display = 'block';
+                paypalOptions.style.display = 'none';
+                paypalButtonContainer.style.display = 'none'; // Hide PayPal button
+            }
+        }
+
+        function renderPayPalButton() {
+            paypal.Buttons({
+                createOrder: function (data, actions) {
+                    // Calculate the total amount and ensure it's correct
+                    let totalAmount = calculateTotalAmount();
+                    console.log("Total Amount: ", totalAmount); // Debugging line
+
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: totalAmount
+                            }
+                        }]
+                    });
+                },
+                onApprove: function (data, actions) {
+                    return actions.order.capture().then(function (details) {
+                        alert('Transaction completed by ' + details.payer.name.given_name);
+                        // Handle post-payment actions here (e.g., save order to database)
+                    });
+                },
+                onError: function (err) {
+                    console.error('PayPal Checkout error:', err); // Debugging line
+                }
+            }).render('#paypal-button-container'); // Render PayPal button
+        }
+
+        function calculateTotalAmount() {
+            // Example implementation: Total amount is hardcoded for now
+            // Replace this with the actual calculation based on cart items
+            let total = '10.00'; // Example amount
+            console.log("Calculated Total Amount: ", total); // Debugging line
+            return total;
+        }
+    </script>
+</body>
+
+</html>
